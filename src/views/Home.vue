@@ -1,18 +1,29 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Nav />
+    <PostsList v-bind:posts="ALL_POSTS"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+  import {mapGetters,mapActions} from 'vuex';
+  import Nav from "../components/Nav";
+  import PostsList from "../components/PostsList";
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  components: {Nav, PostsList},
+  computed: mapGetters(['IS_LOGED','ALL_POSTS']),
+  methods: mapActions(['GET_POSTS']),
+  mounted() {
+    if (this.IS_LOGED===false){
+      this.$router.push({name: 'login'})
+    } else {
+      this.GET_POSTS();
+    }
   }
 }
 </script>
+
+<style scoped>
+
+</style>
