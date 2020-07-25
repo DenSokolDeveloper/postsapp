@@ -36,6 +36,10 @@ Vue.use(VueRouter);
       redirect: {name: 'login'},
     },
     {
+      path: '*',
+      redirect: {name: 'login'},
+    },
+    {
       path: '/postsapp/login',
       name: 'login',
       component: Login
