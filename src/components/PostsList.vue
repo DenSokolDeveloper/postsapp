@@ -33,22 +33,34 @@ export default {
       filterPost: '',
       filterUser: '',
       postsPerPage:10,
-      pageNumber:1
+      pageNumber:1,
+      currentArray:null
     }
   },
   computed: {
     filteredPosts () {
-      return this.posts.filter(p=>p.title.toLowerCase().includes(this.filterPost.toLowerCase()))
+      return this.currentArray.filter(p=>p.title.toLowerCase().includes(this.filterPost.toLowerCase()))
     },
     filteredUsers () {
-      return this.posts.filter(p=>p.userId=== +this.filterUser)
+      return this.currentArray.filter(p=>p.userId=== +this.filterUser)
     },
     resultArray () {
       let result;
       if (this.filterPost!==''){
-        result = this.filteredPosts;
-      }else if (this.filterUser!==''){
-        result = this.filteredUsers;
+        this.currentArray = this.posts;
+        result = this.currentArray = this.filteredPosts;
+        if (this.filterUser!==''){
+          result = this.currentArray = this.filteredUsers;
+        }
+      }else if (this.filterPost===''&&this.filterUser===''){
+        result = this.posts;
+      }
+      if (this.filterUser!=='') {
+        this.currentArray = this.posts;
+        result = this.currentArray = this.filteredUsers;
+        if (this.filterPost!=='') {
+          result = this.currentArray = this.filteredPosts;
+        }
       }else if (this.filterPost===''&&this.filterUser===''){
         result = this.posts;
       }
